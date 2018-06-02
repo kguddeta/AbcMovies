@@ -8,6 +8,8 @@ namespace AbcMovies.Models
         public string Name { get; set; }
         public DateTime? BirthDate { get; set; }
         public bool IsSubscribedToNewsLetter { get; set; }
+        public byte MembershipTypeId { get; set; }
+
 
     }
 }
