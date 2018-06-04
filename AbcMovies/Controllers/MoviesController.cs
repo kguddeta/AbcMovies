@@ -1,5 +1,6 @@
 ﻿using AbcMovies.Models;
 using AbcMovies.ViewModels;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -28,61 +29,67 @@ namespace AbcMovies.Controllers
             return View(movies);
         }
 
-        public ActionResult Details(int id)
+        public ViewResult New()
         {
-            var movie = _context.Movies.Include(c => c.Genre).SingleOrDefault(c => c.Id == id);
-            if (movie == null)
-                return HttpNotFound();
-            return View(movie);
-        }
+            var genres = _context.Genres.ToList();
 
-        public ActionResult New()
-        {
-            var genreType = _context.Genres.ToList();
             var viewModel = new MovieFormViewModel
             {
-                Genre = genreType
+                Genres = genres
             };
+            _context.SaveChanges();
             return View("MovieForm", viewModel);
         }
+
+       
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            var viewModel = new MovieFormViewModel
+            {
+                Genres = _context.Genres.ToList(),
+                Movie = movie
+            };
+            _context.SaveChanges();
+            return View("MovieForm", viewModel);
+        }
+
+
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                return HttpNotFound();
+
+            return View(movie);
+
+        }
+
         [HttpPost]
         public ActionResult Save(Movie movie)
         {
             if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
                 _context.Movies.Add(movie);
+            }
             else
             {
-                var movieInDb = _context.Movies.Single(c => c.Id == movie.Id);
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
                 movieInDb.Name = movie.Name;
-                movieInDb.Releasedate = movie.Releasedate;
                 movieInDb.GenreId = movie.GenreId;
-                movieInDb.DateAdded = movie.DateAdded;
                 movieInDb.NumberInStock = movie.NumberInStock;
-
+                movieInDb.Releasedate = movie.Releasedate;
             }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Movies");
         }
-
-
-        public ActionResult Edit(int id)
-        {
-            var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
-            if (movie == null)
-                return HttpNotFound();
-            var viewModel = new MovieFormViewModel
-            {
-                Movie = movie,
-                Genre = _context.Genres.ToList()
-            };
-            _context.SaveChanges();
-            return View("MovieForm", viewModel);
-        }
-
-
-
- 
-
     }
 }

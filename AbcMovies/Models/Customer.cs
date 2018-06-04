@@ -19,6 +19,7 @@ namespace AbcMovies.Models
         [Display(Name = "Membership Type")]
         public MembershipType MembershipType { get; set; }
 
+        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
 
 

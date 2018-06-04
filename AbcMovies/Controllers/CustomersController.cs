@@ -25,7 +25,7 @@ namespace AbcMovies.Controllers
         {
             var membershipTypes = _context.MembershipTypes.ToList();
             
-            var viewModel = new CustomerFormViewModel
+            var viewModel = new NewCustomerViewModel
             {
                 MembershipTypes = membershipTypes
             };
@@ -72,7 +72,7 @@ namespace AbcMovies.Controllers
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
                 return HttpNotFound();
-            var viewModel = new CustomerFormViewModel
+            var viewModel = new NewCustomerViewModel
             {
                 Customer = customer,
                 MembershipTypes = _context.MembershipTypes.ToList()
