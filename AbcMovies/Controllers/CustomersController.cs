@@ -21,9 +21,10 @@ namespace AbcMovies.Controllers
             _context.Dispose();
         }
 
-        public ActionResult New()
+        public ActionResult Save()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
+            
             var viewModel = new CustomerFormViewModel
             {
                 MembershipTypes = membershipTypes
@@ -46,7 +47,6 @@ namespace AbcMovies.Controllers
                 customerInDb.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
 
             }
-
             _context.SaveChanges();
 
             return RedirectToAction("Index","Customers");
@@ -77,6 +77,7 @@ namespace AbcMovies.Controllers
                 Customer = customer,
                 MembershipTypes = _context.MembershipTypes.ToList()
             };
+            _context.SaveChanges();
             return View("CustomerForm", viewModel);
         }
     }
