@@ -85,6 +85,8 @@ namespace AbcMovies.Controllers
                 movieInDb.GenreId = movie.GenreId;
                 movieInDb.NumberInStock = movie.NumberInStock;
                 movieInDb.Releasedate = movie.Releasedate;
+                //Altenative ways to the above four lines of codes
+                //Mapper.Map(movie,movieInDb);                
             }
 
             _context.SaveChanges();

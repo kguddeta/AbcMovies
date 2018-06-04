@@ -21,12 +21,13 @@ namespace AbcMovies.Controllers
             _context.Dispose();
         }
 
-        public ActionResult Save()
+        public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
             
             var viewModel = new NewCustomerViewModel
             {
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
 
@@ -34,9 +35,20 @@ namespace AbcMovies.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
-            if(customer.Id==0)
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new NewCustomerViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("CustomerForm",viewModel);
+            }
+                
+            if (customer.Id==0)
                 _context.Customers.Add(customer);
             else
             {
