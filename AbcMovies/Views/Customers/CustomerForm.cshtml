@@ -35,6 +35,11 @@
     @Html.HiddenFor(m => m.Customer.Id)
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
+
+    <div>
+        <br/>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 }
 
 @section scripts

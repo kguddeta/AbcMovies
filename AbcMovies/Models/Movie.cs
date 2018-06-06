@@ -7,7 +7,7 @@ namespace AbcMovies.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Movie name is required")]
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -18,11 +18,12 @@ namespace AbcMovies.Models
         public DateTime DateAdded { get; set; }
 
         [Display(Name = "Number in Stock")]
+        [Range(1,20)]
         public int NumberInStock { get; set; }
 
         public Genre Genre { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Genre Type is Required")]
         [Display(Name = "Genre")]
         public byte GenreId { get; set; }
 
