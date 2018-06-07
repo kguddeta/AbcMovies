@@ -4,6 +4,7 @@ using AutoMapper;
 using System;
 using System.Linq;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace AbcMovies.Controllers.Api
 {
@@ -18,7 +19,10 @@ namespace AbcMovies.Controllers.Api
         //GET /api/customers
         public IHttpActionResult GetCustomers()
         {
-            var customerDto = _context.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
+            var customerDto = _context.Customers
+                .Include(c=>c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer,CustomerDto>);
             return Ok(customerDto);
         }
 

@@ -8,11 +8,13 @@ namespace AbcMovies.App_Start
     {
         public MappingProfile()
         {
+            //Domain to Dto
             CreateMap<Customer, CustomerDto>();
-            CreateMap<CustomerDto, Customer>();
-            CreateMap<CustomerDto, Customer>().ForMember(c => c.Id, opt => opt.Ignore());
             CreateMap<Movie, MovieDto>();
-            CreateMap<MovieDto, Movie>();
+            CreateMap<MembershipTypeDto, MembershipType>();
+
+            //Dto to Domain
+            CreateMap<CustomerDto, Customer>().ForMember(c => c.Id, opt => opt.Ignore());
             CreateMap<MovieDto, Movie>().ForMember(m => m.Id, opt => opt.Ignore());
 
         }

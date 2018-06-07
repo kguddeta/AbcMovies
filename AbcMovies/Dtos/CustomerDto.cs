@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using AbcMovies.Models;
 
 namespace AbcMovies.Dtos
 {
@@ -17,5 +18,7 @@ namespace AbcMovies.Dtos
         public bool IsSubscribedToNewsLetter { get; set; }
 
         public byte MembershipTypeId { get; set; }
+        public MembershipTypeDto MembershipType { get; set; }
+
     }
 }
